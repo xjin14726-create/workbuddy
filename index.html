@@ -177,7 +177,7 @@ body.dark .bar i{box-shadow:0 0 10px rgba(102,126,234,.4)}
 .cal-title{font-size:14px;font-weight:700;min-width:78px;text-align:center;color:var(--txt2)}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .cal-dow{text-align:center;font-size:11px;color:var(--muted);padding:4px 0;font-weight:600}
-.cal-cell{position:relative;min-height:60px;border:1px solid var(--bd2);border-radius:8px;padding:5px 7px;cursor:pointer;background:var(--card2);transition:all .12s;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.cal-cell{position:relative;min-height:70px;border:1px solid var(--bd2);border-radius:8px;padding:5px 7px;cursor:pointer;background:var(--card2);transition:all .12s;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
 .cal-cell:hover{border-color:#667eea;transform:translateY(-1px);box-shadow:0 3px 10px rgba(102,126,234,.18)}
 .cal-cell.out{opacity:.32;background:transparent;cursor:default;pointer-events:none}
 .cal-cell.today{border-color:#667eea;box-shadow:0 0 0 1px #667eea inset}
@@ -185,12 +185,12 @@ body.dark .bar i{box-shadow:0 0 10px rgba(102,126,234,.4)}
 body.dark .cal-cell.inrange{background:rgba(102,126,234,.22)}
 .cal-cell.focus{border-color:#764ba2;box-shadow:0 0 0 2px #764ba2 inset}
 .cal-dnum{font-size:12px;font-weight:600;color:var(--txt)}
-.cal-bot{display:flex;flex-direction:column;align-items:flex-start;line-height:1.15}
-.cal-damt{font-size:13px;color:var(--txt2);font-variant-numeric:tabular-nums;font-weight:700}
+.cal-bot{display:flex;flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:16px;line-height:1.2}
+.cal-damt{font-size:24px;color:var(--txt2);font-variant-numeric:tabular-nums;font-weight:800;letter-spacing:.5px}
 .cal-damt.hot{color:#e53935}
 body.dark .cal-damt.hot{color:#ff6b6b}
 .cal-cell.zero .cal-damt{color:var(--muted);font-weight:400}
-.cal-dcnt{font-size:10px;color:#43a047;font-variant-numeric:tabular-nums;font-weight:600;margin-top:1px}
+.cal-dcnt{font-size:12px;color:#43a047;font-variant-numeric:tabular-nums;font-weight:700}
 body.dark .cal-dcnt{color:#66bb6a}
 .cal-detail{margin-top:14px;text-align:center;padding:18px;border-radius:12px;border:1px solid var(--bd);background:linear-gradient(135deg,rgba(102,126,234,.06),rgba(118,75,162,.06))}
 body.dark .cal-detail{background:linear-gradient(135deg,rgba(102,126,234,.12),rgba(118,75,162,.12))}
@@ -202,10 +202,11 @@ body.dark .cal-big.hot{color:#ff6b6b}
 body.dark .cal-big2{color:#8a9bff}
 .cal-range-sum{font-size:12px;color:var(--muted);margin-top:10px}
 @media(max-width:768px){
-  .cal-cell{min-height:52px;padding:3px 4px}
+  .cal-cell{min-height:58px;padding:3px 4px}
   .cal-dnum{font-size:11px}
-  .cal-damt{font-size:11px}
+  .cal-damt{font-size:15px}
   .cal-dcnt{font-size:9px}
+  .cal-bot{column-gap:8px}
   .cal-big{font-size:24px}
   .cal-big2{font-size:16px}
   .cal-grid{gap:3px}
@@ -231,7 +232,7 @@ body.dark .cal-big2{color:#8a9bff}
 <div class=bg1></div><div class=bg2></div><div class=bg3></div>
 <main>
 <div class="hdr"><h1>西南口腔核销数据看板</h1>
-<p>2026-05-01 ~ 2026-08-25 | 3258单 | ¥7289233 | 2026-08-25 15:16 | <span id="js_status" style="color:#ffeb3b">加载中...</span></p></div>
+<p>2026-05-01 ~ 2026-08-25 | 3258单 | ¥7289233 | 2026-08-25 15:26 | <span id="js_status" style="color:#ffeb3b">加载中...</span></p></div>
 <div class="ft">
 <input type="date" id="s" value="2026-08-25"><span>~</span><input type="date" id="e" value="2026-08-25">
 <button class="pb on" onclick="ps('today')">今天</button>
