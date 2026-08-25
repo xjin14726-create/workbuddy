@@ -165,6 +165,20 @@ body.dark .bar i{box-shadow:0 0 10px rgba(102,126,234,.4)}
   /* 表格横向滚动 */
   .card table{display:block;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch}
   .card table thead,.card table tbody{display:table;width:100%;min-width:500px}
+  /* 核销日历手机端交互 */
+  .cal-nav button{width:40px;height:38px;font-size:18px}
+  .cal-nav .cal-today{padding:0 12px;font-size:12px}
+  .cal-grid{gap:2px}
+  .cal-cell{min-height:50px;padding:2px 3px;border-radius:6px}
+  .cal-dnum{font-size:10px}
+  .cal-damt{font-size:13px;letter-spacing:0}
+  .cal-dcnt{font-size:8px}
+  .cal-bot{column-gap:6px}
+  .cal-detail{padding:14px}
+  .cal-big{font-size:22px}
+  .cal-big2{font-size:15px}
+  .cal-range{font-size:12px}
+  .cal-title{font-size:13px;min-width:70px}
 }
 
 /* ===== 核销日历 ===== */
@@ -232,7 +246,7 @@ body.dark .cal-big2{color:#8a9bff}
 <div class=bg1></div><div class=bg2></div><div class=bg3></div>
 <main>
 <div class="hdr"><h1>西南口腔核销数据看板</h1>
-<p>2026-05-01 ~ 2026-08-25 | 3265单 | ¥7300656 | 2026-08-25 16:44 | <span id="js_status" style="color:#ffeb3b">加载中...</span></p></div>
+<p>2026-05-01 ~ 2026-08-25 | 3265单 | ¥7300656 | 2026-08-25 17:09 | <span id="js_status" style="color:#ffeb3b">加载中...</span></p></div>
 <div class="ft">
 <input type="date" id="s" value="2026-08-25"><span>~</span><input type="date" id="e" value="2026-08-25">
 <button class="pb on" onclick="ps('today')">今天</button>
@@ -305,6 +319,15 @@ function calInit(){
   CAL.focus = DAILY[today]?today:(ks.length?ks[ks.length-1]:today);
   var d7=new Date(t); d7.setDate(d7.getDate()-6);
   CAL.start=d7.toISOString().slice(0,10); CAL.end=today;
+  renderCalendar();
+}
+function calSync(){
+  var s=document.getElementById("s").value, e=document.getElementById("e").value;
+  if(!s||!e)return;
+  CAL.start=s; CAL.end=e;
+  var sd=new Date(s+"T00:00:00");
+  CAL.y=sd.getFullYear(); CAL.m=sd.getMonth();
+  CAL.focus=e;
   renderCalendar();
 }
 function calGo(d){ CAL.m+=d; if(CAL.m<0){CAL.m=11;CAL.y--;} if(CAL.m>11){CAL.m=0;CAL.y++;} renderCalendar(); }
@@ -446,17 +469,20 @@ function r(){
     }};
     A=new Chart(document.getElementById("ca"),{type:"bar",data:{labels:lb,datasets:[{data:al,backgroundColor:C,borderRadius:6}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:false}}},plugins:[BL]});
     P=new Chart(document.getElementById("cp"),{type:"doughnut",data:{labels:lb,datasets:[{data:cl,backgroundColor:C}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',radius:'64%',plugins:{legend:{display:false}}},plugins:[DL]});
+    goals(); calSync();
 }
 
 var GK='xnkq_targets_v1';
 function goals(){
     var t=JSON.parse(localStorage.getItem(GK)||'{}');
-    var now=new Date(),ms=now.toISOString().slice(0,7);
+    var s=document.getElementById("s").value||new Date().toISOString().slice(0,10);
+    var sy=s.slice(0,7);
+    var gd=new Date(s+"T00:00:00");
     var ag={};O.forEach(function(d){ag[d]=0;});
-    _DATA_.forEach(function(d){if(d.time.slice(0,7)==ms){if(ag[d.disease]==null)ag[d.disease]=0;ag[d.disease]+=d.amount;}});
-    var dim=new Date(now.getFullYear(),now.getMonth()+1,0).getDate();
-    var tp=Math.round(now.getDate()/dim*100);
-    document.getElementById("tp").textContent="("+(now.getMonth()+1)+"月 · 时间进度 "+tp+"%)";
+    _DATA_.forEach(function(d){if(d.time.slice(0,7)==sy){if(ag[d.disease]==null)ag[d.disease]=0;ag[d.disease]+=d.amount;}});
+    var dim=new Date(gd.getFullYear(),gd.getMonth()+1,0).getDate();
+    var tp=Math.round(gd.getDate()/dim*100);
+    document.getElementById("tp").textContent="("+(gd.getMonth()+1)+"月 · 时间进度 "+tp+"%)";
     var th="",tt=0,ca2=0;
     O.forEach(function(d){
         var g=+t[d]||0,a=ag[d]||0,r2=g?a/g*100:0;tt+=g;ca2+=a;
